@@ -50,7 +50,6 @@ In `.env`:
 
 ```env
 PORT=3000
-DB_DIALECT=mysql
 DB_HOST=127.0.0.1
 DB_PORT=3306
 DB_NAME=ecommerce

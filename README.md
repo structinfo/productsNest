@@ -1,6 +1,6 @@
 # Products Service (NestJS + Sequelize + MySQL)
 
-Backend microservice for managing e-commerce products using NestJS and Sequelize.
+Demo backend microservice for managing e-commerce products using NestJS and Sequelize.
 
 ## Project Structure
 
