@@ -5,23 +5,19 @@ Backend microservice for managing e-commerce products using NestJS and Sequelize
 ## Notes & Suggestions
 
 - All database fields and validation limits are just examples.
-  In real world scenario they will be derived from the domain.
+  In a real-world scenario, these should be derived from the domain.
 
 - Price is implemented as decimal as it was defined in the requirements document.
-  It is suggest considering price representation as integer (in cents) to avoid possible rounding issues.
+  It is suggested to represent price as an integer (in cents) to avoid possible rounding issues.
 
-- Product update is implemented to only change stock value as it was requested in the requirements document.
-  In practice a method or separate methods to update product name and price are needed as well.
+- Product updates currently only support changing stock, as requested in the requirements document.
+  In practice, separate methods to update product name and price are needed as well.
 
-- No authorisation is implemented since they were not mentioned in the requirements document.
+- No authorization is implemented since it was not mentioned in the requirements document.
 
 - It is suggested to add support for Correlation id.
 
 - It is suggested to implement structured logging.
-
-- Product creation endpoint is not idempotent in current implementation.
-  We can switch to 2-step product creation process if we need idempotance
-  (get new id -> set product data; expire/delete unused ids).
 
 ## Products Service Setup
 
@@ -29,7 +25,7 @@ Backend microservice for managing e-commerce products using NestJS and Sequelize
 cp .env.example .env
 ```
 
-Update .env file to match you database setup.
+Update the .env file to match your database setup.
 
 ```
 npm ci
@@ -40,13 +36,11 @@ npm start
 The API runs on `http://localhost:3000` with prefix `/api`.
 Swagger docs are available at `http://localhost:3000/api/docs`.
 
-## API Documentation
-
-- Swagger UI: [http://localhost:3000/api/docs](http://localhost:3000/api/docs)
+Port 3000 in these links is the default. Replace it with the proper port defined in environment variable PORT.
 
 ## Environment Variables
 
-In `.env`:
+Can be modified in `.env` file:
 
 ```env
 PORT=3000
@@ -57,11 +51,22 @@ DB_USER=ecommerce_user
 DB_PASSWORD=ecommerce_pass
 ```
 
-## API Endpoints (CRUD + Pagination)
+## API Documentation
+
+Comprehensive API documentation is provided as an OpenAPI schema,
+with Swagger UI for an interactive experience.
+
+- OpenAPI schema: [http://localhost:3000/api/docs-json](http://localhost:3000/api/docs-json)
+
+- Swagger UI: [http://localhost:3000/api/docs](http://localhost:3000/api/docs)
+
+You can also find API usage examples below.
+
+### API Endpoints
 
 Base URL: `http://localhost:3000/api/products`
 
-### Create Product
+#### Create Product
 
 `POST /api/products`
 
@@ -101,7 +106,11 @@ Success response (`201`):
 }
 ```
 
-### Read Products (Pagination Enabled)
+Product creation idempotency is handled by the uniqueness of productToken. Subsequent calls to the creation endpoint with the same productToken result in an HTTP 409 error.
+It is important to handle this error properly on the requester side.
+
+
+#### Read Products (Pagination Enabled)
 
 `GET /api/products?page=1&limit=10`
 
@@ -131,7 +140,7 @@ Success response (`200`):
 }
 ```
 
-### Get Product
+#### Get Product
 
 `GET /api/products/:id`
 
@@ -153,17 +162,7 @@ Success response (`200`):
 }
 ```
 
-Not found (`404`):
-
-```json
-{
-  "statusCode": 404,
-  "message": "Product with id 999 not found",
-  "error": "Not Found"
-}
-```
-
-### Update Product Stock
+#### Update Product Stock
 
 `PATCH /api/products/:id/stock`
 
@@ -197,7 +196,7 @@ Success response (`200`):
 }
 ```
 
-### Delete Product
+#### Delete Product
 
 `DELETE /api/products/:id`
 
@@ -207,7 +206,7 @@ curl -X DELETE "http://localhost:3000/api/products/1"
 
 Success response: `204 No Content`
 
-## Validation and Error Handling
+### Validation and Error Handling
 
 - Request validation uses `class-validator` + global `ValidationPipe`.
 - Unknown fields are rejected (`forbidNonWhitelisted: true`).
@@ -215,7 +214,7 @@ Success response: `204 No Content`
 - Missing product IDs return `404 Not Found`.
 - Bad payloads return `400 Bad Request`.
 
-## Response Contract Notes
+### Response Contract Notes
 
 - Product `createdAt` and `updatedAt` are returned as ISO 8601 date-time strings.
 

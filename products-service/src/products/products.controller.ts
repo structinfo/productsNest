@@ -37,7 +37,10 @@ export class ProductsController {
 
   @Post()
   @HttpCode(HttpStatus.CREATED)
-  @ApiOperation({ summary: 'Create a new product' })
+  @ApiOperation({
+    summary: 'Create a new product',
+    description: 'Product creation idempotency in handled by uniqueness of productToken. Subsequent calls to the creation endpoint with the same productToken end with 409 HTTP error code. It is important to properly handle this error on the requestor side.',
+  })
   @ApiCreatedResponse({
     type: ProductResponseDto,
     description: 'Product created successfully',
