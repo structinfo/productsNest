@@ -1,6 +1,7 @@
-import { Type } from 'class-transformer';
 import { ApiProperty } from '@nestjs/swagger';
+import { Type } from 'class-transformer';
 import {
+  IsInt,
   IsNotEmpty,
   IsNumber,
   IsPositive,
@@ -47,7 +48,7 @@ export class CreateProductDto {
     description: 'Current stock quantity',
   })
   @Type(() => Number)
-  @IsNumber({ maxDecimalPlaces: 0 })
+  @IsInt()
   @Min(0)
   stock!: number;
 }

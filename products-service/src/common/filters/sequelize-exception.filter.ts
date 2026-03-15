@@ -20,7 +20,7 @@ export class SequelizeExceptionFilter implements ExceptionFilter {
       response.status(HttpStatus.CONFLICT).json({
         statusCode: HttpStatus.CONFLICT,
         message: 'Unique constraint violation',
-        details: exception.errors.map((error) => error.message),
+        details: exception.errors.map(error => error.message),
       });
       return;
     }
@@ -29,7 +29,7 @@ export class SequelizeExceptionFilter implements ExceptionFilter {
       response.status(HttpStatus.BAD_REQUEST).json({
         statusCode: HttpStatus.BAD_REQUEST,
         message: 'Database validation failed',
-        details: exception.errors.map((error) => error.message),
+        details: exception.errors.map(error => error.message),
       });
       return;
     }

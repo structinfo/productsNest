@@ -35,7 +35,9 @@ class EnvironmentVariables {
   DB_PASSWORD?: string;
 }
 
-export function validateEnv(config: Record<string, unknown>): Record<string, unknown> {
+export function validateEnv(
+  config: Record<string, unknown>,
+): Record<string, unknown> {
   const validatedConfig = plainToInstance(EnvironmentVariables, config, {
     enableImplicitConversion: true,
   });
@@ -45,7 +47,7 @@ export function validateEnv(config: Record<string, unknown>): Record<string, unk
   });
 
   if (errors.length > 0) {
-    const messages = errors.flatMap((error) =>
+    const messages = errors.flatMap(error =>
       error.constraints ? Object.values(error.constraints) : [],
     );
     throw new Error(`Environment validation failed: ${messages.join('; ')}`);

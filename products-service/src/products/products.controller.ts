@@ -39,7 +39,8 @@ export class ProductsController {
   @HttpCode(HttpStatus.CREATED)
   @ApiOperation({
     summary: 'Create a new product',
-    description: 'Product creation idempotency in handled by uniqueness of productToken. Subsequent calls to the creation endpoint with the same productToken end with 409 HTTP error code. It is important to properly handle this error on the requestor side.',
+    description:
+      'Product creation idempotency in handled by uniqueness of productToken. Subsequent calls to the creation endpoint with the same productToken end with 409 HTTP error code. It is important to properly handle this error on the requestor side.',
   })
   @ApiCreatedResponse({
     type: ProductResponseDto,
@@ -47,7 +48,9 @@ export class ProductsController {
   })
   @ApiBadRequestResponse({ description: 'Invalid request payload' })
   @ApiConflictResponse({ description: 'Product token already exists' })
-  create(@Body() createProductDto: CreateProductDto): Promise<ProductResponseDto> {
+  create(
+    @Body() createProductDto: CreateProductDto,
+  ): Promise<ProductResponseDto> {
     return this.productsService.create(createProductDto);
   }
 
@@ -89,7 +92,10 @@ export class ProductsController {
   @Patch(':id/stock')
   @ApiOperation({ summary: 'Update product stock by ID' })
   @ApiParam({ name: 'id', type: Number, description: 'Product ID' })
-  @ApiOkResponse({ type: ProductResponseDto, description: 'Stock updated successfully' })
+  @ApiOkResponse({
+    type: ProductResponseDto,
+    description: 'Stock updated successfully',
+  })
   @ApiBadRequestResponse({ description: 'Invalid product ID or payload' })
   @ApiNotFoundResponse({ description: 'Product not found' })
   updateStock(

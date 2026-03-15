@@ -28,7 +28,9 @@ export class ProductsService {
     return product;
   }
 
-  async create(createProductDto: CreateProductDto): Promise<ProductResponseDto> {
+  async create(
+    createProductDto: CreateProductDto,
+  ): Promise<ProductResponseDto> {
     try {
       const product = await this.productModel.create({
         ...createProductDto,
@@ -57,7 +59,7 @@ export class ProductsService {
     });
 
     return {
-      items: rows.map((product) => toProductResponseDto(product)),
+      items: rows.map(product => toProductResponseDto(product)),
       total: count,
       page,
       limit,

@@ -55,7 +55,10 @@ describe('ProductsController', () => {
     });
 
     const result = await controller.findAll({ page: 1, limit: 10 });
-    expect(mockProductsService.findAll).toHaveBeenCalledWith({ page: 1, limit: 10 });
+    expect(mockProductsService.findAll).toHaveBeenCalledWith({
+      page: 1,
+      limit: 10,
+    });
     expect(result.total).toBe(0);
   });
 });

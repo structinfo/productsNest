@@ -109,7 +109,6 @@ Success response (`201`):
 Product creation idempotency is handled by the uniqueness of productToken. Subsequent calls to the creation endpoint with the same productToken result in an HTTP 409 error.
 It is important to handle this error properly on the requester side.
 
-
 #### Read Products (Pagination Enabled)
 
 `GET /api/products?page=1&limit=10`
