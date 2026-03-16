@@ -52,6 +52,16 @@ Run the container with environment variables from `.env`:
 docker run --rm -p 3000:3000 --env-file .env products-service
 ```
 
+Add `--rm` to `docker run` command to remove the container after the run.
+
+Note: The provided Dockerfile uses BuildKit caching therefore
+it requires BuildKit for the build. Usually it is already enabled,
+but if `docker build` command does not work properly in your setup, run build as:
+
+```bash
+DOCKER_BUILDKIT=1 docker build -t products-service .
+```
+
 Containerized endpoint examples:
 
 - API: `http://localhost:3000/api`

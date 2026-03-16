@@ -17,7 +17,7 @@ class EnvironmentVariables {
   @Type(() => Number)
   @IsInt()
   @Min(1)
-  PORT?: number;
+  PORT: number = 3000;
 
   @IsString()
   @IsNotEmpty()
@@ -63,5 +63,8 @@ export function validateEnv(
     throw new Error(`Environment validation failed: ${messages.join('; ')}`);
   }
 
-  return config;
+  return {
+    ...config,
+    PORT: validatedConfig.PORT,
+  };
 }

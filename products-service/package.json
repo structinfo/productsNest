@@ -12,6 +12,12 @@
     "format:check": "prettier --check \"{src,test}/**/*.ts\" \"*.{json,md}\"",
     "start": "node dist/main.js",
     "start:dev": "ts-node -r tsconfig-paths/register src/main.ts",
+    "docker:build": "DOCKER_BUILDKIT=1 docker build -t products-service:latest .",
+    "docker:run": "docker run --rm -p 3000:3000 --env-file .env --name products-service products-service:latest",
+    "docker:run:detached": "docker run -d -p 3000:3000 --env-file .env --name products-service products-service:latest",
+    "docker:stop": "docker stop products-service",
+    "docker:logs": "docker logs -f products-service",
+    "docker:clean": "docker rm -f products-service",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:e2e": "jest --config ./test/jest-e2e.json"
