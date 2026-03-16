@@ -13,8 +13,6 @@ Backend microservice for managing e-commerce products using NestJS and Sequelize
 - Product updates currently only support changing stock, as requested in the requirements document.
   In practice, separate methods to update product name and price are needed as well.
 
-- No authorization is implemented since it was not mentioned in the requirements document.
-
 - It is suggested to add support for Correlation id.
 
 - It is suggested to implement structured logging.
@@ -93,6 +91,8 @@ SWAGGER_ENABLED=true
 ### Runtime Security and Shutdown
 
 - Graceful shutdown is enabled via Nest shutdown hooks.
+- No authorization is implemented since it was not mentioned in the requirements document.
+- Since authorization is not specified in the requirements document, I assume this is internal service, therefore CORS and Helmet are not needed.
 
 ## API Documentation
 
