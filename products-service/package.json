@@ -20,7 +20,9 @@
     "docker:clean": "docker rm -f products-service",
     "test": "jest",
     "test:watch": "jest --watch",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "test:e2e": "jest --config ./test/jest-docker-e2e.json --runInBand",
+    "test:e2e:lite": "jest --config ./test/jest-lite-e2e.json",
+    "test:coverage": "jest --coverage"
   },
   "keywords": [],
   "author": "Vladimir Korobov",
@@ -54,6 +56,7 @@
     "jest": "^30.3.0",
     "prettier": "^3.8.1",
     "supertest": "^7.2.2",
+    "testcontainers": "^11.12.0",
     "ts-jest": "^29.4.6",
     "ts-node": "^10.9.2",
     "tsconfig-paths": "^4.2.0",

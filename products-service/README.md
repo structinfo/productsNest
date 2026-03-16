@@ -270,11 +270,33 @@ Product Sequelize model is defined in:
 
 ## Test Commands
 
-From `products-service`:
-
 ```bash
 npm test
+npm run test:e2e:lite
 npm run test:e2e
+npm run test:coverage
 ```
 
-Unit and e2e tests cover service/controller behavior and request validation.
+### Unit tests
+
+- Command: `npm test`
+- Unit tests covers: service, controller, mapper, filter, and env validation logic.
+- Bootstrap and config files left untested intensionally.
+
+### E2E test setups
+
+Two e2e flavors are available and both are black-box at HTTP boundary (requests are sent via `supertest`):
+
+- `npm run test:e2e:lite` (config: `test/jest-lite-e2e.json`)
+  - Runs fast and does **not** require Docker.
+  - Boots a Nest app in-process with `ProductsController`.
+  - Uses a mocked `ProductsService` to validate request/response contract, routing, validation, and HTTP status behavior.
+  - Best for quick feedback in local development and CI stages where Docker is not available.
+
+- `npm run test:e2e` (config: `test/jest-docker-e2e.json`)
+  - Full Docker blackbox setup via Testcontainers.
+  - Starts an isolated network with:
+    - MySQL container
+    - Built `products-service` Docker image container
+  - Executes real HTTP requests against the containerized service (`/api/products`), covering app bootstrap, DB wiring, schema init, and CRUD flow end-to-end.
+  - Requires Docker daemon; slower but closer to production behavior.
