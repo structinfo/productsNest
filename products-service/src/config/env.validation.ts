@@ -1,13 +1,19 @@
 import { plainToInstance, Type } from 'class-transformer';
 import {
+  IsIn,
   IsInt,
   IsNotEmpty,
+  IsOptional,
   IsString,
   Min,
   validateSync,
 } from 'class-validator';
 
 class EnvironmentVariables {
+  @IsOptional()
+  @IsIn(['development', 'test', 'production'])
+  NODE_ENV?: string;
+
   @Type(() => Number)
   @IsInt()
   @Min(1)
@@ -33,6 +39,10 @@ class EnvironmentVariables {
   @IsString()
   @IsNotEmpty()
   DB_PASSWORD?: string;
+
+  @IsOptional()
+  @IsIn(['true', 'false'])
+  SWAGGER_ENABLED?: string;
 }
 
 export function validateEnv(

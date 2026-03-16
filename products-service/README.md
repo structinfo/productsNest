@@ -43,13 +43,21 @@ Port 3000 in these links is the default. Replace it with the proper port defined
 Can be modified in `.env` file:
 
 ```env
+NODE_ENV=development
 PORT=3000
 DB_HOST=127.0.0.1
 DB_PORT=3306
 DB_NAME=ecommerce
 DB_USER=ecommerce_user
 DB_PASSWORD=ecommerce_pass
+SWAGGER_ENABLED=true
 ```
+
+- In production, set `SWAGGER_ENABLED=false` unless API docs must be public/internal.
+
+### Runtime Security and Shutdown
+
+- Graceful shutdown is enabled via Nest shutdown hooks.
 
 ## API Documentation
 

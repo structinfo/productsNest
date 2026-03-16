@@ -1,13 +1,18 @@
-import 'reflect-metadata';
 import { ValidationPipe } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import 'reflect-metadata';
 import { AppModule } from './app.module';
 import { SequelizeExceptionFilter } from './common/filters/sequelize-exception.filter';
-import { ConfigService } from '@nestjs/config';
+import { getSecurityRuntimeConfig } from './config/security.config';
 
 async function bootstrap(): Promise<void> {
   const app = await NestFactory.create(AppModule);
+  const configService = app.get(ConfigService);
+  const { swaggerEnabled } = getSecurityRuntimeConfig(configService);
+
+  app.enableShutdownHooks();
 
   app.setGlobalPrefix('api');
   app.useGlobalPipes(
@@ -19,16 +24,18 @@ async function bootstrap(): Promise<void> {
   );
   app.useGlobalFilters(new SequelizeExceptionFilter());
 
-  const swaggerConfig = new DocumentBuilder()
-    .setTitle('Products Service API')
-    .setDescription('API documentation for the products microservice')
-    .setVersion('0.0.1')
-    .build();
+  if (swaggerEnabled) {
+    const swaggerConfig = new DocumentBuilder()
+      .setTitle('Products Service API')
+      .setDescription('API documentation for the products microservice')
+      .setVersion('0.0.1')
+      .build();
 
-  const document = SwaggerModule.createDocument(app, swaggerConfig);
-  SwaggerModule.setup('api/docs', app, document);
+    const document = SwaggerModule.createDocument(app, swaggerConfig);
+    SwaggerModule.setup('api/docs', app, document);
+  }
 
-  const port = app.get(ConfigService).getOrThrow<number>('PORT');
+  const port = configService.getOrThrow<number>('PORT');
   await app.listen(port);
 }
 
