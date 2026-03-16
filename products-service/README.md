@@ -38,6 +38,31 @@ Swagger docs are available at `http://localhost:3000/api/docs`.
 
 Port 3000 in these links is the default. Replace it with the proper port defined in environment variable PORT.
 
+## Docker Image
+
+Build a local Docker image for the service:
+
+```bash
+docker build -t products-service .
+```
+
+Run the container with environment variables from `.env`:
+
+```bash
+docker run --rm -p 3000:3000 --env-file .env products-service
+```
+
+Containerized endpoint examples:
+
+- API: `http://localhost:3000/api`
+- Swagger UI: `http://localhost:3000/api/docs`
+
+### Docker in Microservice Architecture
+
+- When running multiple containers, place services on the same Docker network.
+- Set `DB_HOST` to the database service/container name (for example `mysql`) instead of `127.0.0.1`.
+- Ensure the database container is reachable on `DB_PORT`.
+
 ## Environment Variables
 
 Can be modified in `.env` file:
