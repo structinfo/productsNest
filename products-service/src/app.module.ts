@@ -16,12 +16,13 @@ import { Product } from './products/models/product.model';
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => {
         const db = getDatabaseConfig(configService);
+        const shouldSynchronize = configService.get<string>('DB_SYNCHRONIZE') === 'true';
 
         return {
           ...db,
           models: [Product], // list models explicitly
           autoLoadModels: false,
-          synchronize: false,
+          synchronize: shouldSynchronize, // used by e2e tests
           logging: false,
         };
       },

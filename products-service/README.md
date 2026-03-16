@@ -84,9 +84,11 @@ DB_NAME=ecommerce
 DB_USER=ecommerce_user
 DB_PASSWORD=ecommerce_pass
 SWAGGER_ENABLED=true
+DB_SYNCHRONIZE=false
 ```
 
 - In production, set `SWAGGER_ENABLED=false` unless API docs must be public/internal.
+- Keep `DB_SYNCHRONIZE=false` in production. It is enabled in e2e tests only.
 
 ### Runtime Security and Shutdown
 

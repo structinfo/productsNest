@@ -43,6 +43,10 @@ class EnvironmentVariables {
   @IsOptional()
   @IsIn(['true', 'false'])
   SWAGGER_ENABLED?: string;
+
+  @IsOptional()
+  @IsIn(['true', 'false'])
+  DB_SYNCHRONIZE?: string;
 }
 
 export function validateEnv(
